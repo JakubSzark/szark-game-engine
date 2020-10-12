@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="SzarkCore.cpp" />
+    <ClCompile Include="Vendor\GLAD\glad.c">
+      <Filter>Vendor\GLAD</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SzarkCore.h" />
+    <ClInclude Include="Vendor\GLAD\KHR\khrplatform.h">
+      <Filter>Vendor\GLAD</Filter>
+    </ClInclude>
+    <ClInclude Include="Vendor\GLAD\glad\glad.h">
+      <Filter>Vendor\GLAD</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glfw\glfw3.h">
+      <Filter>Vendor\GLFW</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\al\al.h">
+      <Filter>Vendor\OpenAL</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\al\alc.h">
+      <Filter>Vendor\OpenAL</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Vendor">
+      <UniqueIdentifier>{4b9b334b-4b2b-41ef-ae43-efd4ea762053}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendor\GLAD">
+      <UniqueIdentifier>{c1b9afd0-aad4-4794-b127-3251b0b521e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendor\GLFW">
+      <UniqueIdentifier>{0ba2ef7b-627d-4c8a-84ea-65b991ea2641}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendor\OpenAL">
+      <UniqueIdentifier>{74e8b686-546b-4a71-8479-ef094ad8c8e1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

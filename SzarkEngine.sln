@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30524.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SzarkCore", "core\szark-core.vcxproj", "{D5973E71-FEC9-451F-8A16-D8C4E98FACEA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SzarkEngine", "runtime\SzarkEngine.csproj", "{F870A6C0-A523-4046-A9D7-F4F83E79AEE3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D5973E71-FEC9-451F-8A16-D8C4E98FACEA}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{D5973E71-FEC9-451F-8A16-D8C4E98FACEA}.Debug|x64.ActiveCfg = Debug|x64
+		{D5973E71-FEC9-451F-8A16-D8C4E98FACEA}.Debug|x64.Build.0 = Debug|x64
+		{D5973E71-FEC9-451F-8A16-D8C4E98FACEA}.Debug|x86.ActiveCfg = Debug|Win32
+		{D5973E71-FEC9-451F-8A16-D8C4E98FACEA}.Debug|x86.Build.0 = Debug|Win32
+		{D5973E71-FEC9-451F-8A16-D8C4E98FACEA}.Release|Any CPU.ActiveCfg = Release|Win32
+		{D5973E71-FEC9-451F-8A16-D8C4E98FACEA}.Release|x64.ActiveCfg = Release|x64
+		{D5973E71-FEC9-451F-8A16-D8C4E98FACEA}.Release|x64.Build.0 = Release|x64
+		{D5973E71-FEC9-451F-8A16-D8C4E98FACEA}.Release|x86.ActiveCfg = Release|Win32
+		{D5973E71-FEC9-451F-8A16-D8C4E98FACEA}.Release|x86.Build.0 = Release|Win32
+		{F870A6C0-A523-4046-A9D7-F4F83E79AEE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F870A6C0-A523-4046-A9D7-F4F83E79AEE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F870A6C0-A523-4046-A9D7-F4F83E79AEE3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F870A6C0-A523-4046-A9D7-F4F83E79AEE3}.Debug|x64.Build.0 = Debug|Any CPU
+		{F870A6C0-A523-4046-A9D7-F4F83E79AEE3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F870A6C0-A523-4046-A9D7-F4F83E79AEE3}.Debug|x86.Build.0 = Debug|Any CPU
+		{F870A6C0-A523-4046-A9D7-F4F83E79AEE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F870A6C0-A523-4046-A9D7-F4F83E79AEE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F870A6C0-A523-4046-A9D7-F4F83E79AEE3}.Release|x64.ActiveCfg = Release|Any CPU
+		{F870A6C0-A523-4046-A9D7-F4F83E79AEE3}.Release|x64.Build.0 = Release|Any CPU
+		{F870A6C0-A523-4046-A9D7-F4F83E79AEE3}.Release|x86.ActiveCfg = Release|Any CPU
+		{F870A6C0-A523-4046-A9D7-F4F83E79AEE3}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {757DE989-3D7C-4962-B908-EC898DEF742B}
+	EndGlobalSection
+EndGlobal
