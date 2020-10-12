@@ -11,6 +11,12 @@ The runtime is made with C# and contains the meat of what a user will be interac
 - Download latest release dll's
 - Attach dll's to c# project
 
+## Features
+- Drawing pixels in the window
+- Drawing bitmap files (.bmp)
+- Playing Audio (.wav)
+- Entity Component System (TODO)
+
 ## Example Code
 This code creates a simple window with static.
 ```c#
@@ -47,12 +53,3 @@ namespace Example
     }
 }
 ```
-
-## Libraries Used
-- GLFW
-- GLAD
-- OpenAL
-
-## Supported File Types
-- .BMP
-- .WAV
