@@ -52,3 +52,7 @@ namespace Example
 - GLFW
 - GLAD
 - OpenAL
+
+## Supported File Types
+- .BMP
+- .WAV
