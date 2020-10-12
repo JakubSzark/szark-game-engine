@@ -2,10 +2,12 @@
 The newest and simplest version of the szark engine. Made with C++ and C#
 
 ## What is it?
-Szark engine v2 is a sequel to my last version of szark engine but this time, I focus on simplicity and no dependencies.
-I wanted to focus more on making this an actual no-gui game engine and make it really easy to get started. The engine
-is made up of two parts: the core and the runtime. The core is written in C++ and contains things windowing, opengl, openal, etc...
-The runtime is made with C# and contains the meat of what a user will be interacting with to make their games.
+Szark Engine V2 is a sequel to my last version. 
+I focus on simplicity and no dependencies.
+The engine is made up of two parts: Core and Runtime. 
+The Core is written in C++ and contains things GLFW, OpenGL, OpenAL, etc...
+The Runtime is made with C# and contains the meat of what a user will 
+be interacting with to make their games.
 
 ## How to Install
 - Download latest release dll's
