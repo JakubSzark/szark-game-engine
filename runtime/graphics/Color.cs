@@ -50,7 +50,7 @@ namespace Szark.Graphics
         /// Creates a color based on the HSV format and converted in RGBA.
         /// [Hue(0-360), Saturation(0-100), Value(0-100), Alpha(0-255)]
         /// </summary>
-        public static Color FromHSV(float H, float S, float V, byte a = 255)
+        public static Color FromHSV(float H, float S, float V)
         {
             float R, G, B;
             float hf = (H %= 360) / 60.0f;
@@ -82,13 +82,13 @@ namespace Szark.Graphics
         /// Creates a color based on the HSL format and converted to RGBA.
         /// [Hue(0-360), Saturation(0-100), Lightness(0-100), Alpha(0-255)]
         /// </summary>
-        public static Color FromHSL(float h, float s, float l, byte a = 255)
+        public static Color FromHSL(float h, float s, float l)
         {
             h = Mathf.Clamp(h / 360, 0, 1);
             s = Mathf.Clamp(s / 100, 0, 1);
             l = Mathf.Clamp(l / 100, 0, 1);
 
-            float GetHue(float p1, float q1, float t)
+            static float GetHue(float p1, float q1, float t)
             {
                 if (t < 0) t += 1;
                 if (t > 1) t -= 1;
@@ -127,7 +127,7 @@ namespace Szark.Graphics
 
         // -- Object Overrides --
 
-        public override bool Equals(object obj) =>
+        public override bool Equals(object? obj) =>
             obj is Color color && r == color.r &&
                 g == color.g && b == color.b;
 

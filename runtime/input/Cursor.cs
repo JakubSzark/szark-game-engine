@@ -21,15 +21,17 @@ namespace Szark.Input
         {
             RawPosition = new Vector((float)x, (float)y);
 
-            var game = Game.Instance;
-            var posX = game.IsFullscreen ? x - game.WindowWidth * 0.5f : x;
-            var posY = game.IsFullscreen ? y - game.WindowHeight * 0.5f : y;
-
-            Position = new Vector()
+            if (Game.Instance is Game game)
             {
-                x = Mathf.Clamp((float)posX / game.PixelSize, 0, game.ScreenWidth),
-                y = Mathf.Clamp((float)posY / game.PixelSize, 0, game.ScreenHeight)
-            };
+                var posX = game.IsFullscreen ? x - game.WindowWidth * 0.5f : x;
+                var posY = game.IsFullscreen ? y - game.WindowHeight * 0.5f : y;
+
+                Position = new Vector()
+                {
+                    x = Mathf.Clamp((float)posX / game.PixelSize, 0, game.ScreenWidth),
+                    y = Mathf.Clamp((float)posY / game.PixelSize, 0, game.ScreenHeight)
+                };
+            }
         }
     }
 }

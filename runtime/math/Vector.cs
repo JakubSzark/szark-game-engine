@@ -108,7 +108,7 @@ namespace Szark.Math
 
         // -- Equals, GetHashCode, and ToString
 
-        public override bool Equals(object obj) =>
+        public override bool Equals(object? obj) =>
             obj is Vector vector && x == vector.x && y == vector.y;
 
         public override int GetHashCode() =>

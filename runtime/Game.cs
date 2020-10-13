@@ -10,12 +10,12 @@ namespace Szark
         /// <summary>
         /// The singleton instance of Game
         /// </summary>
-        public static Game Instance { get; private set; }
+        public static Game? Instance { get; private set; }
 
         /// <summary>
         /// Called when an error occurs
         /// </summary>
-        public event Action<string> ErrorRecieved;
+        public event Action<string>? ErrorRecieved;
 
         /// <summary>
         /// Width of the GLFW window
@@ -61,8 +61,8 @@ namespace Szark
         public Keyboard Keyboard { get; private set; }
         public Cursor Cursor { get; private set; }
 
-        private Canvas canvas;
-        private Texture drawTarget;
+        private Canvas? canvas;
+        private Texture? drawTarget;
         private IntPtr window;
 
         private uint drawTargetID;
@@ -160,8 +160,10 @@ namespace Szark
                     Core.SetViewport((int)RenderOffset.x, (int)RenderOffset.y,
                         (int)WindowWidth, (int)WindowHeight);
 
-                    OnRender(canvas, Core.GetDeltaTime());
-                    drawTarget.Update(drawTargetID);
+                    if (canvas != null)
+                        OnRender(canvas, Core.GetDeltaTime());
+                    if (drawTarget != null)
+                        drawTarget.Update(drawTargetID);
 
                     Core.UseDefaultShader();
                     Core.UseTexture(drawTargetID);
