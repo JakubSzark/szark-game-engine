@@ -16,7 +16,7 @@ be interacted with to make games.
 ## Features
 - Drawing pixels in the window
 - Drawing bitmap files (.bmp)
-- Playing Audio (.wav)
+- Playing audio (.wav)
 
 ## Example Game
 This example is game about collecting coins until there are none left.
