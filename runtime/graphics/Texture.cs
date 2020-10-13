@@ -51,7 +51,7 @@ namespace Szark.Graphics
                 uint totalSize = reader.ReadUInt32();
 
                 stream.Seek(offset, SeekOrigin.Begin);
-                
+
                 Pixels = new Color[width * height];
                 Width = width;
                 Height = height;
@@ -65,9 +65,9 @@ namespace Szark.Graphics
                 {
                     this[x, y] = new Color()
                     {
-                        r = pixel[2],
-                        g = pixel[1],
-                        b = pixel[0]
+                        R = pixel[2],
+                        G = pixel[1],
+                        B = pixel[0]
                     };
 
                     x++;
@@ -78,11 +78,20 @@ namespace Szark.Graphics
                     }
                 }
             }
-            catch (FileNotFoundException) {
-                throw new FileNotFoundException("Could not find bitmap file!");
+            catch (FileNotFoundException)
+            {
+                Game.Instance?.Error("Could not find bitmap file!");
             }
-            catch (Exception) {
-                throw new Exception("Invalid bitmap file!");
+            catch (Exception)
+            {
+                Game.Instance?.Error("Invalid bitmap file!");
+            }
+            finally
+            {
+                // This creates a fallback texture
+                (Width, Height) = (16, 16);
+                Pixels = new Color[Width * Height];
+                Clear(Color.Magenta);
             }
         }
 

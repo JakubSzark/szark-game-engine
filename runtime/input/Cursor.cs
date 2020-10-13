@@ -28,8 +28,8 @@ namespace Szark.Input
 
                 Position = new Vector()
                 {
-                    x = Mathf.Clamp((float)posX / game.PixelSize, 0, game.ScreenWidth),
-                    y = Mathf.Clamp((float)posY / game.PixelSize, 0, game.ScreenHeight)
+                    X = Mathf.Clamp((float)posX / game.PixelSize, 0, game.ScreenWidth),
+                    Y = Mathf.Clamp((float)posY / game.PixelSize, 0, game.ScreenHeight)
                 };
             }
         }

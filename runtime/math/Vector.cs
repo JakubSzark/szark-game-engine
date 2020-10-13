@@ -17,17 +17,10 @@ namespace Szark.Math
         public static readonly Vector Down = new Vector(0, -1);
         public static readonly Vector Up = new Vector(0, 1);
 
-        public float x, y;
+        public float X, Y;
 
-        public Vector(float unit) :
-            this(unit, unit)
-        { }
-
-        public Vector(float x, float y)
-        {
-            this.x = x;
-            this.y = y;
-        }
+        public Vector(float unit) : this(unit, unit) { }
+        public Vector(float x, float y) => (X, Y) = (x, y);
 
         // -- Public Methods --
 
@@ -35,13 +28,13 @@ namespace Szark.Math
         /// The length of this vector
         /// </summary>
         public float Magnitude() =>
-            (float)System.Math.Sqrt(x * x + y * y);
+            (float)System.Math.Sqrt(X * X + Y * Y);
 
         /// <summary>
         /// The angle of this vector as a direction
         /// </summary>
         public float Angle() =>
-            (float)System.Math.Atan2(x, y);
+            (float)System.Math.Atan2(X, Y);
 
         /// <summary>
         /// Returns this vector with a magnitude of 1
@@ -49,7 +42,7 @@ namespace Szark.Math
         public Vector Normalized()
         {
             float mag = Magnitude();
-            return new Vector(x, y) / (mag > 0 ? mag : 1);
+            return new Vector(X, Y) / (mag > 0 ? mag : 1);
         }
 
         /// <summary>
@@ -58,7 +51,7 @@ namespace Szark.Math
         /// components.
         /// </summary>
         public Vector Scale(Vector other) =>
-            new Vector(x * other.x, y * other.y);
+            new Vector(X * other.X, Y * other.Y);
 
         // -- Static Methods --
 
@@ -66,54 +59,52 @@ namespace Szark.Math
         /// Linearly interpolates a -> b based on the time.
         /// </summary>
         public static Vector Lerp(Vector a, Vector b, float time) =>
-            new Vector(Mathf.Lerp(a.x, b.x, time), Mathf.Lerp(a.y, b.y, time));
+            new Vector(Mathf.Lerp(a.X, b.X, time), Mathf.Lerp(a.Y, b.Y, time));
 
         /// <summary>
         /// Returns the distance between a and b.
         /// </summary>
         public static float Distance(Vector a, Vector b) =>
-            (float)System.Math.Sqrt((b.x - a.x) * (b.x - a.x) +
-                (b.y - a.y) * (b.y - a.y));
+            (float)System.Math.Sqrt((b.X - a.X) * (b.X - a.X) +
+                (b.Y - a.Y) * (b.Y - a.Y));
 
         /// <summary>
         /// Returns the inner product of the two vectors.
         /// </summary>
         public static float Dot(Vector a, Vector b) =>
-            a.x * b.x + a.y * b.y;
+            a.X * b.X + a.Y * b.Y;
 
         // -- Overloaded Arithmetic Operators --
 
         public static Vector operator +(Vector a, Vector b) =>
-            new Vector(a.x + b.x, a.y + b.y);
+            new Vector(a.X + b.X, a.Y + b.Y);
 
         public static Vector operator -(Vector a, Vector b) =>
-            new Vector(a.x - b.x, a.y - b.y);
+            new Vector(a.X - b.X, a.Y - b.Y);
 
         public static Vector operator *(Vector a, float b) =>
-            new Vector(a.x * b, a.y * b);
+            new Vector(a.X * b, a.Y * b);
 
         public static Vector operator /(Vector a, float b) =>
-            new Vector(a.x / b, a.y / b);
+            new Vector(a.X / b, a.Y / b);
 
         public static Vector operator -(Vector a) =>
-            new Vector(-a.x, -a.y);
+            new Vector(-a.X, -a.Y);
 
         // -- Overloaded Equality Operators --
 
         public static bool operator ==(Vector a, Vector b) =>
-            a.x == b.x && a.y == b.y;
+            a.X == b.X && a.Y == b.Y;
 
         public static bool operator !=(Vector a, Vector b) =>
-            a.x != b.x || a.y != b.y;
+            a.X != b.X || a.Y != b.Y;
 
         // -- Equals, GetHashCode, and ToString
 
         public override bool Equals(object? obj) =>
-            obj is Vector vector && x == vector.x && y == vector.y;
+            obj is Vector vector && X == vector.X && Y == vector.Y;
 
-        public override int GetHashCode() =>
-            HashCode.Combine(x, y);
-
-        public override string ToString() => $"({x},{y})";
+        public override int GetHashCode() => HashCode.Combine(X, Y);
+        public override string ToString() => $"({X},{Y})";
     }
 }

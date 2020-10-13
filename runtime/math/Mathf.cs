@@ -1,8 +1,10 @@
-﻿namespace Szark.Math
+﻿using System.Runtime.CompilerServices;
+
+namespace Szark.Math
 {
     public static class Mathf
     {
-        readonly static int[] hash =
+        readonly static byte[] hash =
         {
             208,34,231,213,32,248,233,56,161,78,24,140,71,48,140,254,245,255,247,247,40,
             185,248,251,245,28,124,204,204,76,36,1,107,28,234,163,202,224,245,128,167,204,
@@ -21,18 +23,22 @@
         /// <summary>
         /// Interpolates from a -> b based on t
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Lerp(float a, float b, float t) =>
             (1 - t) * a + t * b;
 
         /// <summary>
         /// Locks the given value between a min and a max
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Clamp(float val, float min, float max) =>
             val < min ? min : val > max ? max : val;
 
         /// <summary>
         /// Smoothly curves given x between edgeA and edgeB
         /// </summary>
+        /// 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Smoothstep(float edgeA, float edgeB, float x)
         {
             x = Clamp((x - edgeA) / (edgeB - edgeA), 0.0f, 1.0f);

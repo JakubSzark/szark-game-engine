@@ -61,7 +61,7 @@ namespace Szark.Graphics
         /// <summary>
         /// Draws a character on the screen
         /// </summary>
-        public static void DrawChar(Canvas gfx, int x, int y, char ch, Color color)
+        public static void DrawChar(this Canvas gfx, int x, int y, char ch, Color color)
         {
             byte b = (byte)ch;
             if (b < 32 || b >= 127) return;
@@ -76,7 +76,7 @@ namespace Szark.Graphics
         /// <summary>
         /// Draws a string onto the screen
         /// </summary>
-        public static void DrawString(Canvas gfx, int x, int y,
+        public static void DrawString(this Canvas gfx, int x, int y,
             string text, Color color, int letterSpacing = 1)
         {
             int i = 0;

@@ -1,4 +1,5 @@
-using System;
+using System.Runtime.CompilerServices;
+using static System.Math;
 
 namespace Szark.Graphics
 {
@@ -7,24 +8,20 @@ namespace Szark.Graphics
     /// </summary>
     public class Canvas
     {
-        /// <summary>
-        /// The texture for this canvas to draw to.
-        /// </summary>
         public Texture Target { get; internal set; }
-
-        public Canvas(Texture target) =>
-            Target = target;
+        public Canvas(Texture target) => Target = target;
 
         /// <summary>
-        /// Draws a color at the given x and y coords
-        /// on the texture.
+        /// Draws a color at the given x and y.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Draw(int x, int y, Color color) =>
             Target[x, y] = color;
 
         /// <summary>
-        /// Clears the target to a spcific color
+        /// Fills the canvas with a specified color
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Fill(Color color) => Target.Clear(color);
 
         /// <summary>
@@ -36,8 +33,8 @@ namespace Szark.Graphics
             float dx = x2 - x1;
             float dy = y2 - y1;
 
-            float absDX = System.Math.Abs(dx);
-            float absDY = System.Math.Abs(dy);
+            float absDX = Abs(dx);
+            float absDY = Abs(dy);
 
             step = absDX >= absDY ? absDX : absDY;
 
@@ -142,7 +139,7 @@ namespace Szark.Graphics
             {
                 for (int j = 0; j < radius * 2; j++)
                 {
-                    var dist = System.Math.Sqrt((radius - i) * (radius - i) +
+                    var dist = Sqrt((radius - i) * (radius - i) +
                         (radius - j) * (radius - j));
                     if (dist < radius) Draw(x - 1 + i, y - 1 + j, color);
                 }
@@ -164,14 +161,14 @@ namespace Szark.Graphics
         /// </summary>
         public void FillTriangle(int x1, int y1, int x2, int y2, int x3, int y3, Color color)
         {
-            float Area(int x1, int y1, int x2, int y2, int x3, int y3) =>
-                System.Math.Abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0f);
+            static float Area(int x1, int y1, int x2, int y2, int x3, int y3) =>
+                Abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0f);
 
-            var minX = System.Math.Min(System.Math.Min(x1, x2), x3);
-            var maxX = System.Math.Max(System.Math.Max(x1, x2), x3);
+            var minX = Min(Min(x1, x2), x3);
+            var maxX = Max(Max(x1, x2), x3);
 
-            var minY = System.Math.Min(System.Math.Min(y1, y2), y3);
-            var maxY = System.Math.Max(System.Math.Max(y1, y2), y3);
+            var minY = Min(Min(y1, y2), y3);
+            var maxY = Max(Max(y1, y2), y3);
 
             float a = Area(x1, y1, x2, y2, x3, y3);
 
@@ -190,15 +187,18 @@ namespace Szark.Graphics
         }
 
         /// <summary>
-        /// Draws a texture on top of the target.
-        /// Texture is scaled with nearest.
+        /// Draws a texture on the canvas
         /// </summary>
         public void DrawTexture(int x, int y, Texture texture, int scale = 1)
         {
             for (int i = 0; i < texture.Width; i++)
+            {
                 for (int j = 0; j < texture.Height; j++)
+                {
                     FillRectangle((x + i) * scale, (y + j) * scale,
                         scale, scale, texture[i, j]);
+                }
+            }
         }
     }
 }

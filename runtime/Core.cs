@@ -16,10 +16,10 @@ namespace Szark
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct Rect
-    {
-        public int x, y, width, height;
-    }
+    internal struct Point { public double x, y; }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct Rect { public int x, y, width, height; }
 
     internal class Core
     {
@@ -146,7 +146,7 @@ namespace Szark
         internal static extern void StopAudioClip(uint id);
 
         [DllImport(CorePath)]
-        internal static extern uint GenerateAudioClipID(int format, 
+        internal static extern uint GenerateAudioClipID(int format,
             [MarshalAs(UnmanagedType.LPArray)] byte[] buffer, uint length, uint freq
         );
     }

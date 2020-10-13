@@ -6,14 +6,10 @@ namespace Szark.Graphics
 {
     public struct Color
     {
-        public byte r, g, b;
+        public byte R, G, B;
 
-        public Color(byte red, byte green, byte blue)
-        {
-            r = red;
-            g = green;
-            b = blue;
-        }
+        public Color(byte red, byte green, byte blue) =>
+            (R, G, B) = (red, green, blue);
 
         // -- Constants --
 
@@ -40,9 +36,9 @@ namespace Szark.Graphics
         {
             return new Color
             {
-                r = (byte)Mathf.Lerp(first.r, second.r, time),
-                g = (byte)Mathf.Lerp(first.g, second.g, time),
-                b = (byte)Mathf.Lerp(first.b, second.b, time),
+                R = (byte)Mathf.Lerp(first.R, second.R, time),
+                G = (byte)Mathf.Lerp(first.G, second.G, time),
+                B = (byte)Mathf.Lerp(first.B, second.B, time),
             };
         }
 
@@ -52,7 +48,7 @@ namespace Szark.Graphics
         /// </summary>
         public static Color FromHSV(float H, float S, float V)
         {
-            float R, G, B;
+            float NR, NG, NB;
             float hf = (H %= 360) / 60.0f;
             int i = (int)System.Math.Floor(hf);
 
@@ -62,19 +58,19 @@ namespace Szark.Graphics
 
             switch (i)
             {
-                case 0: R = V; G = tv; B = pv; break;
-                case 1: R = qv; G = V; B = pv; break;
-                case 2: R = pv; G = V; B = tv; break;
-                case 3: R = pv; G = qv; B = V; break;
-                case 4: R = tv; G = pv; B = V; break;
-                default: R = V; G = pv; B = qv; break;
+                case 0: NR = V; NG = tv; NB = pv; break;
+                case 1: NR = qv; NG = V; NB = pv; break;
+                case 2: NR = pv; NG = V; NB = tv; break;
+                case 3: NR = pv; NG = qv; NB = V; break;
+                case 4: NR = tv; NG = pv; NB = V; break;
+                default: NR = V; NG = pv; NB = qv; break;
             }
 
             return new Color
             {
-                r = (byte)(R * 255f),
-                g = (byte)(G * 255f),
-                b = (byte)(B * 255f),
+                R = (byte)(NR * 255f),
+                G = (byte)(NG * 255f),
+                B = (byte)(NB * 255f),
             };
         }
 
@@ -103,9 +99,9 @@ namespace Szark.Graphics
 
             return new Color
             {
-                r = (byte)System.Math.Round(GetHue(p, q, h + 0.333f)),
-                g = (byte)System.Math.Round(GetHue(p, q, h)),
-                b = (byte)System.Math.Round(GetHue(p, q, h - 0.333f)),
+                R = (byte)System.Math.Round(GetHue(p, q, h + 0.333f)),
+                G = (byte)System.Math.Round(GetHue(p, q, h)),
+                B = (byte)System.Math.Round(GetHue(p, q, h - 0.333f)),
             };
         }
 
@@ -119,46 +115,43 @@ namespace Szark.Graphics
 
             return new Color
             {
-                r = (byte)int.Parse(hex.Substring(1, 2), (NumberStyles)512),
-                g = (byte)int.Parse(hex.Substring(3, 2), (NumberStyles)512),
-                b = (byte)int.Parse(hex.Substring(5, 2), (NumberStyles)512)
+                R = (byte)int.Parse(hex.Substring(1, 2), (NumberStyles)512),
+                G = (byte)int.Parse(hex.Substring(3, 2), (NumberStyles)512),
+                B = (byte)int.Parse(hex.Substring(5, 2), (NumberStyles)512)
             };
         }
 
         // -- Object Overrides --
 
         public override bool Equals(object? obj) =>
-            obj is Color color && r == color.r &&
-                g == color.g && b == color.b;
+            obj is Color color && R == color.R &&
+                G == color.G && B == color.B;
 
         public override int GetHashCode() =>
-            HashCode.Combine(r, g, b);
+            HashCode.Combine(R, G, B);
 
-        public override string ToString() =>
-            $"({r},{g},{b})";
+        public override string ToString() => $"({R},{G},{B})";
 
         // -- Arithmetic Operators --
 
         public static Color operator +(Color f, Color p) =>
-            new Color((byte)(f.r + p.r), (byte)(f.g + p.g),
-                (byte)(f.b + p.b));
+            new Color((byte)(f.R + p.R), (byte)(f.G + p.G),
+                (byte)(f.B + p.B));
 
         public static Color operator -(Color f, Color p) =>
-            new Color((byte)(f.r - p.r), (byte)(f.g - p.g),
-                (byte)(f.b - p.b));
+            new Color((byte)(f.R - p.R), (byte)(f.G - p.G),
+                (byte)(f.B - p.B));
 
         public static Color operator *(Color f, float t) =>
-            new Color((byte)(f.r * t), (byte)(f.g * t),
-                (byte)(f.b * t));
+            new Color((byte)(f.R * t), (byte)(f.G * t),
+                (byte)(f.B * t));
 
         // -- Equality Operators --
 
         public static bool operator ==(Color a, Color b) =>
-            a.r == b.r && a.g == b.g &&
-                a.b == b.b;
+            a.R == b.R && a.G == b.G && a.B == b.B;
 
         public static bool operator !=(Color a, Color b) =>
-            a.r != b.r || a.g != b.g ||
-                a.b != b.b;
+            a.R != b.R || a.G != b.G || a.B != b.B;
     }
 }

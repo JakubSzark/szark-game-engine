@@ -13,7 +13,7 @@ namespace Szark
         public static Game? Instance { get; private set; }
 
         /// <summary>
-        /// Called when an error occurs
+        /// Callback for any errors that occur
         /// </summary>
         public event Action<string>? ErrorRecieved;
 
@@ -127,7 +127,7 @@ namespace Szark
         /// </summary>
         protected virtual void OnDestroy() { }
 
-        void OnError(string error) => ErrorRecieved?.Invoke(error);
+        internal void Error(string error) => ErrorRecieved?.Invoke(error);
 
         void OnWindowEvent(IntPtr window, Core.WindowEvent ev)
         {
@@ -144,8 +144,8 @@ namespace Szark
 
                     RenderOffset = new Vector()
                     {
-                        x = IsFullscreen ? (rect.width - WindowWidth) * 0.5f : 0,
-                        y = IsFullscreen ? (rect.height - WindowHeight) * 0.5f : 0
+                        X = IsFullscreen ? (rect.width - WindowWidth) * 0.5f : 0,
+                        Y = IsFullscreen ? (rect.height - WindowHeight) * 0.5f : 0
                     };
 
                     OnCreated();
@@ -157,7 +157,7 @@ namespace Szark
 
                 case Core.WindowEvent.Render:
                     // Make sure window stays squared and centered
-                    Core.SetViewport((int)RenderOffset.x, (int)RenderOffset.y,
+                    Core.SetViewport((int)RenderOffset.X, (int)RenderOffset.Y,
                         (int)WindowWidth, (int)WindowHeight);
 
                     if (canvas != null)
@@ -177,7 +177,7 @@ namespace Szark
 
         void SetupCallbacks()
         {
-            Core.SetErrorCallback(OnError);
+            Core.SetErrorCallback(Error);
             Core.SetWindowEventCallback(OnWindowEvent);
 
             Core.SetScrollCallback(Mouse.OnScrollEvent);
