@@ -20,7 +20,7 @@ be interacting with to make their games.
 - Entity Component System (TODO)
 
 ## Example Code
-This code creates a simple window with static.
+This example is game about collecting coins until there are none left.
 ```c#
 using System.Collections.Generic;
 using System;
