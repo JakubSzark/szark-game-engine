@@ -17,7 +17,6 @@ be interacting with to make their games.
 - Drawing pixels in the window
 - Drawing bitmap files (.bmp)
 - Playing Audio (.wav)
-- Entity Component System (TODO)
 
 ## Example Code
 This example is game about collecting coins until there are none left.
