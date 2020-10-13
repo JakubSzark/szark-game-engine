@@ -2,16 +2,16 @@
 The newest and simplest version of the szark engine. Made with C++ and C#
 
 ## What is it?
-Szark Engine V2 is a sequel to my last version. 
-I focus on simplicity and no dependencies.
+Szark Engine V2 is a sequel to the last version. 
+I focus on simplicity and no package dependencies.
 The engine is made up of two parts: Core and Runtime. 
 The Core is written in C++ and contains things GLFW, OpenGL, OpenAL, etc...
-The Runtime is made with C# and contains the meat of what a user will 
-be interacting with to make their games.
+The Runtime is made with C# and contains the meat of what will
+be interacted with to make games.
 
 ## How to Install
-- Download latest release dll's
-- Attach dll's to c# project
+- Make sure you have .NET 5.0 SDK Installed
+- Download an Empty Project from the Releases Page
 
 ## Features
 - Drawing pixels in the window
