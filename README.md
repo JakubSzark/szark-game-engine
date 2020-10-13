@@ -43,9 +43,6 @@ namespace Example
         // This method is called when the Game is created
         protected override void OnCreated()
         {
-            // Here we setup error logging
-            ErrorRecieved += s => Console.WriteLine($"[Error]: {s}");
-
             // Spawn all the coins
             Random random = new Random();
             for (int i = 0; i < ScreenWidth; i++)
