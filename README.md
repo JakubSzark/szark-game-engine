@@ -18,7 +18,7 @@ be interacting with to make their games.
 - Drawing bitmap files (.bmp)
 - Playing Audio (.wav)
 
-## Example Code
+## Example Game
 This example is game about collecting coins until there are none left.
 ```c#
 using System.Collections.Generic;
