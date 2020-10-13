@@ -33,9 +33,8 @@ namespace Example
 {
     class ExampleGame : Szark.Game
     {
-        private readonly Random random = new Random();
-        private readonly List<(int, int)> coins = new List<(int, int)>();
-        private Vector position;
+        private Vector player;
+        private readonly List<Vector> coins = new List<Vector>();
         private int wallet;
 
         // We setup our window configuration in the base constructor
@@ -48,9 +47,10 @@ namespace Example
             ErrorRecieved += s => Console.WriteLine($"[Error]: {s}");
 
             // Spawn all the coins
+            Random random = new Random();
             for (int i = 0; i < ScreenWidth; i++)
                 for (int j = 0; j < ScreenHeight; j++)
-                    if (random.Next(50) == 0) coins.Add((i, j));
+                    if (random.Next(50) == 0) coins.Add(new Vector(i, j));
         }
 
         // This method is called once per frame
@@ -62,27 +62,27 @@ namespace Example
             // Draw all the coins
             for (int i = 0; i < coins.Count; i++)
             {
-                if ((int)position.x == coins[i].Item1 &&
-                    (int)position.y == coins[i].Item2)
+                // Check if player is in same position
+                if (player.x == coins[i].x && player.y == coins[i].y)
                 {
-                    coins.RemoveAt(i);
                     wallet++;
+                    coins.RemoveAt(i);
                     continue;
                 }
 
-                gfx.Draw(coins[i].Item1, coins[i].Item2, Color.Yellow);
+                gfx.Draw((int)coins[i].x, (int)coins[i].y, Color.Yellow);
             }
 
             // Move the Player
-            if (Keyboard[Key.W, Input.Hold]) position.y -= 1;
-            if (Keyboard[Key.S, Input.Hold]) position.y += 1;
-            if (Keyboard[Key.A, Input.Hold]) position.x -= 1;
-            if (Keyboard[Key.D, Input.Hold]) position.x += 1;
+            if (Keyboard[Key.W, Input.Hold]) player.y -= 1;
+            if (Keyboard[Key.S, Input.Hold]) player.y += 1;
+            if (Keyboard[Key.A, Input.Hold]) player.x -= 1;
+            if (Keyboard[Key.D, Input.Hold]) player.x += 1;
 
             // Draw the player
-            gfx.Draw((int)position.x, (int)position.y, Color.Green);
+            gfx.Draw((int)player.x, (int)player.y, Color.Green);
 
-            // Draw wallet
+            // Draw total coins collected
             Text.DrawString(gfx, 0, 0, $"{wallet}", Color.White);
 
             // Win Text!
