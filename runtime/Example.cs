@@ -4,7 +4,6 @@ using System;
 using Szark.Math;
 using Szark.Graphics;
 using Szark.Input;
-using Szark;
 
 namespace Example
 {
@@ -12,7 +11,7 @@ namespace Example
     {
         private Vector player;
         private readonly List<Vector> coins = new List<Vector>();
-        private int wallet;
+        private int coinsCollected;
 
         // We setup our window configuration in the base constructor
         public ExampleGame() : base("Example", 1280, 720, 8, false) { }
@@ -31,7 +30,7 @@ namespace Example
         }
 
         // This method is called once per frame
-        protected override void OnRender(Canvas gfx, double deltaTime)
+        protected override void OnRender(Canvas gfx, float deltaTime)
         {
             // Clear the screen
             gfx.Fill(Color.Black);
@@ -40,27 +39,27 @@ namespace Example
             for (int i = 0; i < coins.Count; i++)
             {
                 // Check if player is in same position
-                if (player.X == coins[i].X && player.Y == coins[i].Y)
+                if (Vector.Distance(player, coins[i]) < 1)
                 {
-                    wallet++;
+                    coinsCollected++;
                     coins.RemoveAt(i);
                     continue;
                 }
 
-                gfx.Draw((int)coins[i].X, (int)coins[i].Y, Color.Yellow);
+                gfx.Draw(coins[i], Color.Yellow);
             }
 
             // Move the Player
-            if (Keyboard[Key.W, Input.Hold]) player.Y -= 1;
-            if (Keyboard[Key.S, Input.Hold]) player.Y += 1;
-            if (Keyboard[Key.A, Input.Hold]) player.X -= 1;
-            if (Keyboard[Key.D, Input.Hold]) player.X += 1;
+            float speed = 50 * deltaTime;
+            if (Keyboard[Key.W, Input.Hold]) player.Y -= speed;
+            if (Keyboard[Key.S, Input.Hold]) player.Y += speed;
+            if (Keyboard[Key.A, Input.Hold]) player.X -= speed;
+            if (Keyboard[Key.D, Input.Hold]) player.X += speed;
 
-            // Draw the player
-            gfx.Draw((int)player.X, (int)player.Y, Color.Green);
+            gfx.Draw(player, Color.Green); // Draw the player
 
             // Draw total coins collected
-            gfx.DrawString(0, 0, $"{wallet}", Color.White);
+            gfx.DrawString(-1, 0, $"{coinsCollected}", Color.White, -1);
 
             // Win Text!
             if (coins.Count == 0)

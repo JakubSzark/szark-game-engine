@@ -9,6 +9,13 @@ namespace Szark.Math
     /// </summary>
     public partial struct Vector
     {
+        public float X, Y;
+
+        public Vector(float unit) : this(unit, unit) { }
+        public Vector(float x, float y) => (X, Y) = (x, y);
+
+        // -- Constants --
+
         public static readonly Vector One = new Vector(1, 1);
         public static readonly Vector Zero = new Vector(0, 0);
 
@@ -16,11 +23,6 @@ namespace Szark.Math
         public static readonly Vector Left = new Vector(-1, 0);
         public static readonly Vector Down = new Vector(0, -1);
         public static readonly Vector Up = new Vector(0, 1);
-
-        public float X, Y;
-
-        public Vector(float unit) : this(unit, unit) { }
-        public Vector(float x, float y) => (X, Y) = (x, y);
 
         // -- Public Methods --
 

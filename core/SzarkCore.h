@@ -7,6 +7,7 @@
 
 #include "vendor/glad/glad/glad.h"
 #include "vendor/glfw/glfw3.h"
+
 #include "vendor/al/al.h"
 #include "vendor/al/alc.h"
 
@@ -20,8 +21,12 @@ enum class WindowEvent {
 
 struct Point { double x, y; };
 struct Rect { int x, y, width, height; };
-struct InputValue {	int control, action; };
+struct InputValue { int control, action; };
 struct Color { unsigned char r, g, b; };
+struct AudioClip { uint source, buffer; };
+
+auto Error(const char* msg) -> void;
+auto InitDefaultShader() -> bool;
 
 extern "C"
 {
@@ -33,14 +38,11 @@ extern "C"
 	EXPORT auto SetKeyCallback(void(*c)(int key, int action));
 	EXPORT auto SetCursorCallback(void(*c)(double x, double y));
 
-	EXPORT auto InitializeLibraries() -> bool;
-	EXPORT auto TerminateLibraries() -> void;
-
 	EXPORT auto Show(GLFWwindow* window) -> void;
-	EXPORT auto Create(const char*, uint, uint, bool) -> GLFWwindow*;
+	EXPORT auto Create(const char*, uint, uint, bool)->GLFWwindow*;
 	EXPORT auto Close(GLFWwindow* window) -> void;
 
-	EXPORT auto GenerateTextureID(Color*, uint, uint) -> uint;
+	EXPORT auto GenerateTextureID(Color*, uint, uint)->uint;
 	EXPORT auto UpdateTexture(uint, Color*, uint, uint) -> void;
 
 	EXPORT auto UseShader(uint) -> void;
@@ -49,15 +51,18 @@ extern "C"
 	EXPORT auto RenderQuad() -> void;
 
 	EXPORT auto GetDeltaTime() -> double;
-	EXPORT auto CompileShader(const char*, const char*) -> uint;
+	EXPORT auto CompileShader(const char*, const char*)->uint;
 	EXPORT auto InitializeRenderer() -> void;
 
-	EXPORT auto GetPrimaryMonitorRect() -> Rect;
+	EXPORT auto GetPrimaryMonitorRect()->Rect;
 	EXPORT auto SetViewport(int, int, int, int) -> void;
 
 	EXPORT auto InitializeAudioContext() -> void;
 	EXPORT auto PlayAudioClip(uint, int, bool) -> void;
 	EXPORT auto StopAudioClip(uint id) -> void;
-	EXPORT auto GenerateAudioClipID(int format, const char* buffer, 
-		uint length, uint freq) -> uint;
+	EXPORT auto CreateAudioClip(int format, const char* buffer,
+		uint length, uint freq)->AudioClip;
+	EXPORT auto DestroyAudioClip(AudioClip clip) -> void;
+
+	EXPORT auto SetVSync(bool enabled) -> void;
 }

@@ -1,5 +1,7 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
+using System;
+
+using Szark.Audio;
 using Szark.Graphics;
 using Szark.Input;
 
@@ -15,74 +17,62 @@ namespace Szark
         Repeat
     }
 
+    internal enum WindowEvent
+    {
+        Opened,
+        Closed,
+        Render,
+    }
+
     [StructLayout(LayoutKind.Sequential)]
     internal struct Point { public double x, y; }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct Rect { public int x, y, width, height; }
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    internal delegate void KeyCallback(Key key, Action action);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    internal delegate void ErrorCallback([MarshalAs(UnmanagedType.LPStr)] string msg);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    internal delegate void MouseCallback(int button, Action action);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    internal delegate void ScrollCallback(double dx, double dy);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    internal delegate void CursorCallback(double x, double y);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    internal delegate void WindowEventCallback(IntPtr window, WindowEvent ev);
+
     internal class Core
     {
-        internal enum WindowEvent
-        {
-            Opened,
-            Closed,
-            Render,
-        }
-
         const string CorePath = "../../../core/SzarkCore.dll";
 
-        internal delegate void KeyCallback(Key key, Action action);
-        internal delegate void ErrorCallback([MarshalAs(UnmanagedType.LPStr)] string msg);
-        internal delegate void MouseCallback(int button, Action action);
-        internal delegate void ScrollCallback(double dx, double dy);
-        internal delegate void CursorCallback(double x, double y);
-
-        internal delegate void WindowEventCallback(
-            IntPtr window, WindowEvent ev
-        );
+        [DllImport(CorePath)]
+        internal static extern void SetErrorCallback(ErrorCallback callback);
 
         [DllImport(CorePath)]
-        internal static extern void SetErrorCallback(
-            [MarshalAs(UnmanagedType.FunctionPtr)] ErrorCallback callback
-        );
+        internal static extern void SetWindowEventCallback(WindowEventCallback callback);
 
         [DllImport(CorePath)]
-        internal static extern void SetWindowEventCallback(
-            [MarshalAs(UnmanagedType.FunctionPtr)] WindowEventCallback callback
-        );
+        internal static extern void SetKeyCallback(KeyCallback callback);
 
         [DllImport(CorePath)]
-        internal static extern void SetKeyCallback(
-            [MarshalAs(UnmanagedType.FunctionPtr)] KeyCallback callback
-        );
+        internal static extern void SetMouseCallback(MouseCallback callback);
 
         [DllImport(CorePath)]
-        internal static extern void SetMouseCallback(
-            [MarshalAs(UnmanagedType.FunctionPtr)] MouseCallback callback
-        );
+        internal static extern void SetScrollCallback(ScrollCallback callback);
 
         [DllImport(CorePath)]
-        internal static extern void SetScrollCallback(
-            [MarshalAs(UnmanagedType.FunctionPtr)] ScrollCallback callback
-        );
+        internal static extern void SetCursorCallback(CursorCallback callback);
 
-        [DllImport(CorePath)]
-        internal static extern void SetCursorCallback(
-            [MarshalAs(UnmanagedType.FunctionPtr)] CursorCallback callback
-        );
-
-        [DllImport(CorePath)]
-        internal static extern bool InitializeLibraries();
-
-        [DllImport(CorePath)]
-        internal static extern void TerminateLibraries();
-
-        [DllImport(CorePath)]
-        internal static extern IntPtr Create(
-            [MarshalAs(UnmanagedType.LPStr)] string title,
-            uint width, uint height, bool fullscreen
-        );
+        [DllImport(CorePath, CharSet = CharSet.Ansi)]
+        internal static extern IntPtr Create(string title, uint width,
+            uint height, bool fullscreen);
 
         [DllImport(CorePath)]
         internal static extern void Show(IntPtr window);
@@ -106,11 +96,9 @@ namespace Szark
             uint width, uint height
         );
 
-        [DllImport(CorePath)]
-        internal static extern uint CompileShader(
-            [MarshalAs(UnmanagedType.LPStr)] string vertexSrc,
-            [MarshalAs(UnmanagedType.LPStr)] string fragmentSrc
-        );
+        [DllImport(CorePath, CharSet = CharSet.Ansi)]
+        internal static extern uint CompileShader(string vertexSrc,
+            string fragmentSrc);
 
         [DllImport(CorePath)]
         internal static extern void InitializeRenderer();
@@ -146,8 +134,14 @@ namespace Szark
         internal static extern void StopAudioClip(uint id);
 
         [DllImport(CorePath)]
-        internal static extern uint GenerateAudioClipID(int format,
+        internal static extern AudioClip CreateAudioClip(int format,
             [MarshalAs(UnmanagedType.LPArray)] byte[] buffer, uint length, uint freq
         );
+
+        [DllImport(CorePath)]
+        internal static extern void DestroyAudioClip(AudioClip clip);
+
+        [DllImport(CorePath)]
+        internal static extern void SetVSync(bool enabled);
     }
 }

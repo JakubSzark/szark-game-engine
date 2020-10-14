@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace Szark.Input
 {
@@ -30,30 +31,45 @@ namespace Szark.Input
     /// </summary>
     public class Keyboard
     {
+        public Dictionary<Key, bool> keys = new Dictionary<Key, bool>();
+        public Dictionary<Key, bool> lastKeys = new Dictionary<Key, bool>();
+
         public bool this[Key key, Input poll]
         {
             get
             {
-                if (key != current.Key) 
+                if (!keys.ContainsKey(key) ||
+                    !lastKeys.ContainsKey(key))
                     return false;
+
+                var current = keys[key];
+                var last = lastKeys[key];
 
                 return poll switch
                 {
-                    Input.Hold => current.Action == Action.Press
-                        || current.Action == Action.Repeat,
-                    Input.Release => last.Action == Action.Press
-                        && current.Action != last.Action,
-                    Input.Once => current.Action == Action.Press
-                        && current.Action != last.Action,
+                    Input.Hold => current,
+                    Input.Release => !last && current != last,
+                    Input.Once => current && current != last,
                     _ => false
                 };
             }
         }
 
-        private KeyAction current, last;
+        internal void Update()
+        {
+            foreach (var pair in keys)
+            {
+                if (!lastKeys.ContainsKey(pair.Key))
+                    lastKeys.Add(pair.Key, pair.Value);
+                else lastKeys[pair.Key] = pair.Value;
+            }
+        }
 
-        internal void Update() => last = current;
-        internal void OnKeyboardEvent(Key key, Action action) =>
-            (current.Key, current.Action) = (key, action);
+        internal void OnKeyboardEvent(Key key, Action action)
+        {
+            bool pressed = action == Action.Press || action == Action.Repeat;
+            if (keys.ContainsKey(key)) keys[key] = pressed;
+            else keys.Add(key, pressed);
+        }
     }
 }

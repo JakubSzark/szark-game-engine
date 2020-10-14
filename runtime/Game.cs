@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
 using Szark.Graphics;
 using Szark.Input;
 using Szark.Math;
@@ -53,9 +54,16 @@ namespace Szark
         public bool IsFullscreen { get; private set; }
 
         /// <summary>
-        /// Render offset of the Game screen
+        /// Sets whether window vsync is enabled
         /// </summary>
-        public Vector RenderOffset { get; private set; }
+        public bool VSync
+        {
+            get => vsyncEnabled; set
+            {
+                Core.SetVSync(value);
+                vsyncEnabled = value;
+            }
+        }
 
         public Mouse Mouse { get; private set; }
         public Keyboard Keyboard { get; private set; }
@@ -63,9 +71,19 @@ namespace Szark
 
         private Canvas? canvas;
         private Texture? drawTarget;
+        private Vector renderOffset;
         private IntPtr window;
 
         private uint drawTargetID;
+        private bool vsyncEnabled = true;
+
+        // Window callbacks
+        private readonly MouseCallback mouseCallback;
+        private readonly WindowEventCallback windowEventCallback;
+        private readonly ScrollCallback scrollCallback;
+        private readonly CursorCallback cursorCallback;
+        private readonly ErrorCallback errorCallback;
+        private readonly KeyCallback keyCallback;
 
         public Game(string title, uint width, uint height, uint pixelSize, bool fullscreen)
         {
@@ -82,6 +100,14 @@ namespace Szark
             ScreenHeight = height / pixelSize;
             IsFullscreen = fullscreen;
 
+            // Callbacks are required to be members
+            mouseCallback = new MouseCallback(Mouse.OnMouseEvent);
+            scrollCallback = new ScrollCallback(Mouse.OnScrollEvent);
+            windowEventCallback = new WindowEventCallback(OnWindowEvent);
+            cursorCallback = new CursorCallback(Cursor.OnCursorEvent);
+            keyCallback = new KeyCallback(Keyboard.OnKeyboardEvent);
+            errorCallback = new ErrorCallback(Error);
+
             if (Instance == null) Instance = this;
             else if (Instance != this)
                 throw new Exception("Cannot have two Game instances!");
@@ -94,15 +120,10 @@ namespace Szark
         /// </summary>
         public void Run()
         {
-            if (Core.InitializeLibraries())
-            {
-                window = Core.Create(Title, WindowWidth,
-                    WindowHeight, IsFullscreen);
-                if (window.ToInt64() == 0) return;
-
-                Core.Show(window);
-                Core.TerminateLibraries();
-            }
+            window = Core.Create(Title, WindowWidth,
+                WindowHeight, IsFullscreen);
+            if (window.ToInt64() == 0) return;
+            Core.Show(window);
         }
 
         /// <summary>
@@ -120,70 +141,83 @@ namespace Szark
         /// </summary>
         /// <param name="gfx">Canvas for drawing</param>
         /// <param name="deltaTime">Delta time</param>
-        protected virtual void OnRender(Canvas gfx, double deltaTime) { }
+        protected virtual void OnRender(Canvas gfx, float deltaTime) { }
 
         /// <summary>
         /// Called when the window is closed
         /// </summary>
         protected virtual void OnDestroy() { }
 
-        internal void Error(string error) => ErrorRecieved?.Invoke(error);
+        internal void Error(string error) =>
+            ErrorRecieved?.Invoke(error);
 
-        void OnWindowEvent(IntPtr window, Core.WindowEvent ev)
+        void OnWindowEvent(IntPtr window, WindowEvent ev)
         {
             switch (ev)
             {
-                case Core.WindowEvent.Opened:
+                case WindowEvent.Opened:
                     Core.InitializeRenderer();
                     Core.InitializeAudioContext();
-                    drawTarget = new Texture(ScreenWidth, ScreenHeight);
-                    drawTargetID = drawTarget.GenerateID();
-                    canvas = drawTarget.GetCanvas();
-
-                    var rect = Core.GetPrimaryMonitorRect();
-
-                    RenderOffset = new Vector()
-                    {
-                        X = IsFullscreen ? (rect.width - WindowWidth) * 0.5f : 0,
-                        Y = IsFullscreen ? (rect.height - WindowHeight) * 0.5f : 0
-                    };
-
+                    InitDrawTarget();
                     OnCreated();
                     break;
 
-                case Core.WindowEvent.Closed:
+                case WindowEvent.Closed:
                     OnDestroy();
                     break;
 
-                case Core.WindowEvent.Render:
-                    // Make sure window stays squared and centered
-                    Core.SetViewport((int)RenderOffset.X, (int)RenderOffset.Y,
-                        (int)WindowWidth, (int)WindowHeight);
-
-                    if (canvas != null)
-                        OnRender(canvas, Core.GetDeltaTime());
-                    if (drawTarget != null)
-                        drawTarget.Update(drawTargetID);
-
-                    Core.UseDefaultShader();
-                    Core.UseTexture(drawTargetID);
-                    Core.RenderQuad();
-
-                    Keyboard.Update();
-                    Mouse.Update();
+                case WindowEvent.Render:
+                    Render();
                     break;
+            }
+        }
+
+        void Render()
+        {
+            // Make sure window stays squared and centered
+            int w = (int)WindowWidth, h = (int)WindowHeight;
+            int x = (int)renderOffset.X, y = (int)renderOffset.Y;
+            Core.SetViewport(x, y, w, h);
+
+            float deltaTime = (float)Core.GetDeltaTime();
+            if (canvas != null) OnRender(canvas, deltaTime);
+            drawTarget?.Update(drawTargetID);
+
+            Core.UseDefaultShader();
+            Core.UseTexture(drawTargetID);
+            Core.RenderQuad();
+
+            Keyboard.Update();
+            Mouse.Update();
+        }
+
+        void InitDrawTarget()
+        {
+            drawTarget = new Texture(ScreenWidth, ScreenHeight);
+            drawTargetID = drawTarget.GenerateID();
+            canvas = drawTarget.GetCanvas();
+
+            var monitor = Core.GetPrimaryMonitorRect();
+
+            if (IsFullscreen)
+            {
+                var offsetX = (monitor.width - WindowWidth) * 0.5f;
+                var offsetY = (monitor.height - WindowHeight) * 0.5f;
+
+                renderOffset.X = offsetX;
+                renderOffset.Y = offsetY;
             }
         }
 
         void SetupCallbacks()
         {
-            Core.SetErrorCallback(Error);
-            Core.SetWindowEventCallback(OnWindowEvent);
+            Core.SetErrorCallback(errorCallback);
+            Core.SetWindowEventCallback(windowEventCallback);
 
-            Core.SetScrollCallback(Mouse.OnScrollEvent);
-            Core.SetKeyCallback(Keyboard.OnKeyboardEvent);
-            Core.SetCursorCallback(Cursor.OnCursorEvent);
-            Core.SetMouseCallback(Mouse.OnMouseEvent);
+            Core.SetScrollCallback(scrollCallback);
+            Core.SetKeyCallback(keyCallback);
+            Core.SetCursorCallback(cursorCallback);
+            Core.SetMouseCallback(mouseCallback);
         }
     }
 }
