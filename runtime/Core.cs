@@ -50,7 +50,7 @@ namespace Szark
 
     internal class Core
     {
-        const string CorePath = "../../../core/SzarkCore.dll";
+        const string CorePath = "SzarkCore.dll";
 
         [DllImport(CorePath)]
         internal static extern void SetErrorCallback(ErrorCallback callback);
