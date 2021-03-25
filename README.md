@@ -1,16 +1,17 @@
-# Szark Engine V2
+# Szark Game Engine
 The newest and simplest version of the szark engine. Made with C++ and C#
 
 ## What is it?
-Szark Engine V2 is a sequel to the last version. 
-I focus on simplicity and no package dependencies.
+Szark Game Engine is a sequel to an older version running on .NET Core 2.1. 
+The focus here is on simplicity and no package dependencies.
 The engine is made up of two parts: Core and Runtime. 
 The Core is written in C++ and contains things GLFW, OpenGL, OpenAL, etc...
 The Runtime is made with C# and contains the meat of what will
 be interacted with to make games.
 
 ## How to Install
-- Make sure you have .NET 5.0 SDK Installed
+- Grab the OpenAL Install: https://www.openal.org/downloads/
+- Make sure you have .NET 5.0+ SDK Installed
 - Download an Empty Project from the Releases Page
 
 ## Features
