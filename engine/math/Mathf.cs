@@ -4,6 +4,12 @@ namespace Szark.Math
 {
     public static class Mathf
     {
+        /// <summary>Mutiply by this to convert to Radians</summary>
+        public const float DEG2RAD = (float)(System.Math.PI / 180.0f);
+
+        /// <summary>Mutiply by this to convert to Degrees</summary>
+        public const float RAD2DEG = (float)(180.0f / System.Math.PI);
+
         readonly static byte[] hash =
         {
             208,34,231,213,32,248,233,56,161,78,24,140,71,48,140,254,245,255,247,247,40,
