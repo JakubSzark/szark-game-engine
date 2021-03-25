@@ -1,32 +1,12 @@
-# Szark Engine V2
-The newest and simplest version of the szark engine. Made with C++ and C#
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-## What is it?
-Szark Engine V2 is a sequel to the last version. 
-I focus on simplicity and no package dependencies.
-The engine is made up of two parts: Core and Runtime. 
-The Core is written in C++ and contains things GLFW, OpenGL, OpenAL, etc...
-The Runtime is made with C# and contains the meat of what will
-be interacted with to make games.
-
-## How to Install
-- Make sure you have .NET 5.0 SDK Installed
-- Download an Empty Project from the Releases Page
-
-## Features
-- Drawing pixels in the window
-- Drawing bitmap files (.bmp)
-- Playing audio (.wav)
-
-## Example Game
-This example is game about collecting coins until there are none left.
-```c#
-using System.Collections.Generic;
-using System;
-
-using Szark.Math;
+using Szark;
 using Szark.Graphics;
 using Szark.Input;
+using Szark.Math;
+
+using System;
+using System.Collections.Generic;
 
 namespace Example
 {
@@ -88,15 +68,16 @@ namespace Example
             if (coins.Count == 0)
                 gfx.DrawString(20, 20, "You win!", Color.White);
         }
-
-        static void Main() => new ExampleGame().Run();
     }
 }
-```
 
-## Other Examples
-### Raycaster
-<img src="https://i.imgur.com/SPTGHfe.gif" width="400">
-
-## Acknowledgments
-[olcPixelGameEngine](https://github.com/OneLoneCoder/olcPixelGameEngine) by [Javidx9]
+namespace Tests
+{
+    [TestClass]
+    public class CoinGameTest
+    {
+        [TestMethod]
+        public void MainTest() =>
+            new Example.ExampleGame().Run();
+    }
+}

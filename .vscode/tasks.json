@@ -1,0 +1,40 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Core (Windows)",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "core/*.cpp",
+                "core/vendor/glad/glad.c",
+                "-shared",
+                "-std=c++17",
+                "-Lcore/vendor/glfw",
+                "-Lcore/vendor/al",
+                "-lglfw3",
+                "-lOpenAL32",
+                "-lgdi32",
+                "-o",
+                "tests/SzarkCore.dll"
+            ]
+        },
+        {
+            "label": "Test (Windows)",
+            "type": "shell",
+            "command": "dotnet",
+            "args": [
+                "test",
+                "tests/Tests.csproj"
+            ],
+            "dependsOn": [
+                "Build Core (Windows)"
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
