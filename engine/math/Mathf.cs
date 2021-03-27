@@ -41,6 +41,13 @@ namespace Szark.Math
             val < min ? min : val > max ? max : val;
 
         /// <summary>
+        /// Locks the given value between a 0 and 1
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float Clamp01(float val) =>
+            val < 0 ? 0 : val > 1 ? 1 : val;
+
+        /// <summary>
         /// Smoothly curves given x between edgeA and edgeB
         /// </summary>
         /// 

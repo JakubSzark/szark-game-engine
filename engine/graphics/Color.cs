@@ -135,16 +135,25 @@ namespace Szark.Graphics
         // -- Arithmetic Operators --
 
         public static Color operator +(Color f, Color p) =>
-            new Color((byte)(f.R + p.R), (byte)(f.G + p.G),
-                (byte)(f.B + p.B));
+            new Color(
+                    (byte)Mathf.Clamp01(f.R + p.R),
+                    (byte)Mathf.Clamp01(f.G + p.G),
+                    (byte)Mathf.Clamp01(f.B + p.B)
+                );
 
         public static Color operator -(Color f, Color p) =>
-            new Color((byte)(f.R - p.R), (byte)(f.G - p.G),
-                (byte)(f.B - p.B));
+            new Color(
+                    (byte)Mathf.Clamp01(f.R - p.R),
+                    (byte)Mathf.Clamp01(f.G - p.G),
+                    (byte)Mathf.Clamp01(f.B - p.B)
+                );
 
         public static Color operator *(Color f, float t) =>
-            new Color((byte)(f.R * t), (byte)(f.G * t),
-                (byte)(f.B * t));
+            new Color(
+                    (byte)Mathf.Clamp01(f.R * t),
+                    (byte)Mathf.Clamp01(f.G * t),
+                    (byte)Mathf.Clamp01(f.B * t)
+                );
 
         // -- Equality Operators --
 

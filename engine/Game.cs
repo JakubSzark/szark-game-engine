@@ -71,7 +71,7 @@ namespace Szark
 
         private Canvas? canvas;
         private Texture? drawTarget;
-        private Vector renderOffset;
+        private Vec2 renderOffset;
         private IntPtr window;
 
         private uint drawTargetID;

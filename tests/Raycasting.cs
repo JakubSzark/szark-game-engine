@@ -19,7 +19,7 @@ namespace Example
         private const float RAY_INCR = 0.1f;
         private const float FOV = 70f;
 
-        private Vector playerPos;
+        private Vec2 playerPos;
         private float lookAngle = 45f;
 
         private float rotation = 0f;
@@ -35,7 +35,7 @@ namespace Example
                 for (int j = 0; j < map[i].Length; j++)
                 {
                     if (map[i][j] == 'P')
-                        playerPos = new Vector(j, i);
+                        playerPos = new Vec2(j, i);
                 }
             }
         }
@@ -47,14 +47,14 @@ namespace Example
                 float colNorm = (col - (ScreenWidth * 0.5f)) / ScreenWidth;
                 float angle = ((colNorm * FOV) + lookAngle) * Mathf.DEG2RAD;
 
-                Vector lookDir = new Vector((float)Math.Cos(angle),
+                Vec2 lookDir = new Vec2((float)Math.Cos(angle),
                     (float)Math.Sin(angle));
 
                 float dist = RAY_INCR;
 
                 while (dist < MAX_DIST)
                 {
-                    Vector ray = playerPos + (lookDir * dist);
+                    Vec2 ray = playerPos + (lookDir * dist);
 
                     ray.X = (float)Math.Round(ray.X);
                     ray.Y = (float)Math.Round(ray.Y);

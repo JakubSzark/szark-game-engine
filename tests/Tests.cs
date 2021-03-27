@@ -6,7 +6,7 @@ namespace Tests
     public class ExampleTests
     {
         [TestMethod]
-        public void RaycastingTest() =>
-            new Example.Raycasting().Run();
+        public void MainTest() =>
+            new Example.Raytracing().Run();
     }
 }

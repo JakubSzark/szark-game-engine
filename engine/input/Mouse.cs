@@ -40,7 +40,7 @@ namespace Szark.Input
             }
         }
 
-        public Vector Wheel { get; private set; }
+        public Vec2 Wheel { get; private set; }
 
         private MouseAction current, last;
 
@@ -49,6 +49,6 @@ namespace Szark.Input
             (current.Button, current.Action) = (button, action);
 
         internal void OnScrollEvent(double dx, double dy) =>
-            Wheel = new Vector((float)dx, (float)dy);
+            Wheel = new Vec2((float)dx, (float)dy);
     }
 }

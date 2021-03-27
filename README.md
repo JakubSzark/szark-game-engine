@@ -33,8 +33,8 @@ namespace Example
 {
     class ExampleGame : Szark.Game
     {
-        private Vector player;
-        private readonly List<Vector> coins = new List<Vector>();
+        private Vec2 player;
+        private readonly List<Vec2> coins = new List<Vec2>();
         private int coinsCollected;
 
         // We setup our window configuration in the base constructor
@@ -50,7 +50,7 @@ namespace Example
             Random random = new Random();
             for (int i = 0; i < ScreenWidth; i++)
                 for (int j = 0; j < ScreenHeight; j++)
-                    if (random.Next(50) == 0) coins.Add(new Vector(i, j));
+                    if (random.Next(50) == 0) coins.Add(new Vec2(i, j));
         }
 
         // This method is called once per frame
@@ -63,7 +63,7 @@ namespace Example
             for (int i = 0; i < coins.Count; i++)
             {
                 // Check if player is in same position
-                if (Vector.Distance(player, coins[i]) < 1)
+                if (Vec2.Distance(player, coins[i]) < 1)
                 {
                     coinsCollected++;
                     coins.RemoveAt(i);

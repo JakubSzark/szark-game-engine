@@ -5,10 +5,12 @@ namespace Szark.Graphics
 {
     public class Texture
     {
-        public Color[] Pixels { get; private set; }
+        public Color[] Pixels => _pixels;
 
         public uint Width { get; private set; }
         public uint Height { get; private set; }
+
+        private Color[] _pixels;
 
         public Color this[int x, int y]
         {
@@ -23,7 +25,7 @@ namespace Szark.Graphics
         {
             Width = width;
             Height = height;
-            Pixels = new Color[width * height];
+            _pixels = new Color[width * height];
         }
 
         /// <summary>
@@ -52,7 +54,7 @@ namespace Szark.Graphics
 
                 stream.Seek(offset, SeekOrigin.Begin);
 
-                Pixels = new Color[width * height];
+                _pixels = new Color[width * height];
                 Width = width;
                 Height = height;
 
@@ -90,7 +92,7 @@ namespace Szark.Graphics
             {
                 // This creates a fallback texture
                 (Width, Height) = (16, 16);
-                Pixels = new Color[Width * Height];
+                _pixels = new Color[Width * Height];
                 Clear(Color.Magenta);
             }
         }
