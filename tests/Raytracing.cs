@@ -46,7 +46,7 @@ namespace Example
 
     public class Raytracing : Szark.Game
     {
-        public Raytracing() : base("Raytracing", 800, 800, 4, false) { }
+        public Raytracing() : base("Raytracing", 800, 800, 2, false) { }
 
         const float STEP = 0.05f;
         const float MAX_DIST = 10.0f;
@@ -55,7 +55,6 @@ namespace Example
         private float framerate = 0f;
         private float time = 0f;
 
-        private bool isRunning = true;
         private Vec3 lightDir = new Vec3(0, -1, -1).Normalized();
 
         private List<Renderable> scene = new()
