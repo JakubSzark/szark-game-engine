@@ -75,6 +75,8 @@ namespace Szark
         private IntPtr window;
 
         private uint drawTargetID;
+        private uint? customShader;
+
         private bool vsyncEnabled = true;
 
         // Window callbacks
@@ -132,6 +134,19 @@ namespace Szark
         public void Stop() => Core.Close(window);
 
         /// <summary>
+        /// Compiles and uses a custom shader for the Canvas.
+        /// Any shader errors are sent to the error callback.
+        /// </summary>
+        /// <param name="vertexSrc">The Vertex Shader</param>
+        /// <param name="fragSrc">The Fragment Shader</param>
+        public Shader SetCustomShader(string vertexSrc, string fragSrc)
+        {
+            Shader shader = Core.CompileShader(vertexSrc, fragSrc);
+            customShader = shader.ID;
+            return shader;
+        }
+
+        /// <summary>
         /// Called when the Game window has been created
         /// </summary>
         protected virtual void OnCreated() { }
@@ -183,7 +198,11 @@ namespace Szark
             if (canvas != null) OnRender(canvas, deltaTime);
             drawTarget?.Update(drawTargetID);
 
-            Core.UseDefaultShader();
+            if (customShader != null)
+                Core.UseShader(customShader.Value);
+            else
+                Core.UseDefaultShader();
+
             Core.UseTexture(drawTargetID);
             Core.RenderQuad();
 

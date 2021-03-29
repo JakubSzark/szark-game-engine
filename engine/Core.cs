@@ -97,7 +97,7 @@ namespace Szark
         );
 
         [DllImport(CorePath, CharSet = CharSet.Ansi)]
-        internal static extern uint CompileShader(string vertexSrc,
+        internal static extern Shader CompileShader(string vertexSrc,
             string fragmentSrc);
 
         [DllImport(CorePath)]
@@ -143,5 +143,21 @@ namespace Szark
 
         [DllImport(CorePath)]
         internal static extern void SetVSync(bool enabled);
+
+        [DllImport(CorePath)]
+        internal static extern void SendFloat(uint id, float value);
+
+        [DllImport(CorePath)]
+        internal static extern void SendVec2(uint id, float x, float y);
+
+        [DllImport(CorePath)]
+        internal static extern void SendVec3(uint id, float x, float y, float z);
+
+        [DllImport(CorePath)]
+        internal static extern void SendVec4(uint id, float x, float y, float z,
+            float w);
+
+        [DllImport(CorePath, CharSet = CharSet.Ansi)]
+        internal static extern int GetUniformLocation(uint program, string name);
     }
 }
