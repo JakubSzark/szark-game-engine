@@ -7,6 +7,6 @@ namespace Tests
     {
         [TestMethod]
         public void MainTest() =>
-            new Example.RaytracingGPU().Run();
+            new Example.CoinGame().Run();
     }
 }

@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="SzarkEngine">
+      <HintPath>lib\SzarkEngine.dll</HintPath>
+    </Reference>
+    <ContentWithTargetPath Include="lib\SzarkCore.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>SzarkCore.dll</TargetPath>
+    </ContentWithTargetPath >
+  </ItemGroup>
+
+</Project>

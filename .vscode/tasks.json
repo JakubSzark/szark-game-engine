@@ -16,7 +16,30 @@
                 "-lOpenAL32",
                 "-lgdi32",
                 "-o",
-                "tests/SzarkCore.dll"
+                "core/SzarkCore.dll"
+            ]
+        },
+        {
+            "label": "Build Engine",
+            "type": "shell",
+            "command": "dotnet",
+            "args": [
+                "build",
+                "engine/SzarkEngine.csproj",
+                "-c",
+                "release"
+            ]
+        },
+        {
+            "label": "Build & Copy (Windows)",
+            "type": "shell",
+            "command": [
+                "cp core/SzarkCore.dll tests/SzarkCore.dll;",
+                "cp core/SzarkCore.dll template/lib/SzarkCore.dll;",
+                "cp engine/SzarkEngine.dll template/lib/SzarkEngine.dll"
+            ],
+            "dependsOn": [
+                "Build Core (Windows)"
             ]
         },
         {
@@ -28,7 +51,7 @@
                 "tests/Tests.csproj"
             ],
             "dependsOn": [
-                "Build Core (Windows)"
+                "Build & Copy (Windows)"
             ],
             "problemMatcher": [],
             "group": {

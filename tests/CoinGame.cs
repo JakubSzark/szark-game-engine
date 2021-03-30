@@ -14,13 +14,16 @@ namespace Example
         private int coinsCollected;
 
         // We setup our window configuration in the base constructor
-        public CoinGame() : base("Example", 1280, 720, 8, false) { }
+        public CoinGame() : base("Example", 800, 800, 8, false) { }
 
         // This method is called when the Game is created
         protected override void OnCreated()
         {
             // Here we setup error logging
             ErrorRecieved += s => Console.WriteLine($"[Error]: {s}");
+
+            // Place the player in the center
+            player = new Vec2(ScreenWidth / 2, ScreenHeight / 2);
 
             // Spawn all the coins
             Random random = new Random();
@@ -59,7 +62,7 @@ namespace Example
             gfx.Draw(player, Color.Green); // Draw the player
 
             // Draw total coins collected
-            gfx.DrawString(-1, 0, $"{coinsCollected}", Color.White, -1);
+            gfx.DrawString(4, 4, $"{coinsCollected}", Color.White, -1);
 
             // Win Text!
             if (coins.Count == 0)
