@@ -1,26 +1,24 @@
 # Szark Game Engine
-The newest and simplest version of the szark engine. Made with C++ and C#
-
 ## What is it?
-Szark Game Engine is a sequel to an older version running on .NET Core 2.1. 
-The focus here is on simplicity and no package dependencies.
-The engine is made up of two parts: Core and Runtime. 
-The Core is written in C++ and contains things GLFW, OpenGL, OpenAL, etc...
-The Runtime is made with C# and contains the meat of what will
-be interacted with to make games.
+**Szark Game Engine** is a GUI-less game engine created with **C++** and **C#** which allows for a way to easily make visuals or games.
 
 ## How to Install
-- Grab the OpenAL Install: https://www.openal.org/downloads/
-- Make sure you have .NET 5.0+ SDK Installed
-- Download an Empty Project from the Releases Page
+1. Grab the OpenAL Install: https://www.openal.org/downloads/
+2. Make sure you have .NET 5.0+ SDK Installed
+3. Download an Empty Project from the Releases Page
 
 ## Features
-- Drawing pixels in the window
-- Drawing bitmap files (.bmp)
-- Playing audio (.wav)
+- You can draw on the screen with the Canvas API
+- Importing and using images and audio files
+- Custom shaders for the screen
+- Math functions and structures
+
+## Documentation
+Currently there is no wiki, but looking at the examples and the source code can help you get started!
 
 ## Example Game
-This example is game about collecting coins until there are none left.
+<img src="https://i.imgur.com/v06ZBLK.png" width="200"></img>
+### This example is game about collecting coins until there are none left.
 ```c#
 using System.Collections.Generic;
 using System;
@@ -97,7 +95,11 @@ namespace Example
 
 ## Other Examples
 ### Raycaster
-<img src="https://i.imgur.com/SPTGHfe.gif" width="400">
+<img src="https://i.imgur.com/SPTGHfe.gif" width="400"></img>
+### Raytracing (CPU)
+<img src="https://i.imgur.com/g03ZFz5.png" width="400"></img>
+### Raytracing (GPU)
+<img src="https://i.imgur.com/8JcMVde.png" width="400"></img>
 
 ## Acknowledgments
 [olcPixelGameEngine](https://github.com/OneLoneCoder/olcPixelGameEngine) by [Javidx9]
