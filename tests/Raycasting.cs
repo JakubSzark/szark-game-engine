@@ -40,7 +40,7 @@ namespace Example
             }
         }
 
-        protected override void OnRender(Canvas gfx, float deltaTime)
+        protected override void OnRender(Canvas canvas, float deltaTime)
         {
             for (int col = 0; col < ScreenWidth; col++)
             {
@@ -74,15 +74,15 @@ namespace Example
                     // Draw the World!
                     if (row >= centerDist && row <= ScreenHeight - centerDist)
                     {
-                        gfx.Draw(col, row, new Color(distVal, distVal, distVal));
+                        canvas.Draw(col, row, new Color(distVal, distVal, distVal));
                     }
                     else if (row < centerDist)
                     {
-                        gfx.Draw(col, row, new Color(135, 206, 235));
+                        canvas.Draw(col, row, new Color(135, 206, 235));
                     }
                     else
                     {
-                        gfx.Draw(col, row, new Color(0, 154, 23));
+                        canvas.Draw(col, row, new Color(0, 154, 23));
                     }
                 }
             }
@@ -101,7 +101,7 @@ namespace Example
             lookAngle = rotation;
 
             // Draw the FPS in the Upper Left Corner
-            gfx.DrawString(0, 0, $"{currentFPS}", Color.Magenta);
+            canvas.DrawString(0, 0, $"{currentFPS}", Color.Magenta);
         }
 
         protected override void OnDestroy()

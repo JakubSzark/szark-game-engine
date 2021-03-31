@@ -22,7 +22,7 @@ namespace Example
             uCol = shader.GetLocation("uCol").GetValueOrDefault(0);
         }
 
-        protected override void OnRender(Canvas gfx, float deltaTime)
+        protected override void OnRender(Canvas canvas, float deltaTime)
         {
             shader.Send(uCol, new Color(0, 255, 0));
         }

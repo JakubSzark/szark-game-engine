@@ -76,11 +76,11 @@ namespace Szark.Audio
             }
             catch (FileNotFoundException)
             {
-                Game.Instance?.Error($"WAV file {filePath} could not be found!");
+                Game.Get<Game>().Error($"WAV file {filePath} could not be found!");
             }
             catch (Exception e)
             {
-                Game.Instance?.Error($"{filePath} is an invalid WAV file!" +
+                Game.Get<Game>().Error($"{filePath} is an invalid WAV file!" +
                     $"\n{e}");
             }
 

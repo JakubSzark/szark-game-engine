@@ -129,7 +129,7 @@ namespace Example
             gfx.DrawString(0, 0, $"{framerate}", Color.Green);
         }
 
-        private void RenderRegion(Canvas gfx, int x0, int y0, int width, int height)
+        private void RenderRegion(Canvas canvas, int x0, int y0, int width, int height)
         {
             Vec3 perp = camera.Direction.GetPerpendicular().Normalized();
 
@@ -156,11 +156,11 @@ namespace Example
                         {
                             float fog = 1 - (hit.Distance / MAX_DIST);
                             Color diffuse = Diffuse(hit) * fog;
-                            gfx.Draw(col, row, diffuse);
+                            canvas.Draw(col, row, diffuse);
                         }
                         else
                         {
-                            gfx.Draw(col, row, Color.Black);
+                            canvas.Draw(col, row, Color.Black);
                         }
                     }
                 }

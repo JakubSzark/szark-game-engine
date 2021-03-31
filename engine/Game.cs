@@ -1,5 +1,8 @@
 ﻿using System;
-using System.Security.Cryptography.X509Certificates;
+using System.Runtime.CompilerServices;
+using System.Reflection;
+
+using Szark.ECS;
 using Szark.Graphics;
 using Szark.Input;
 using Szark.Math;
@@ -11,7 +14,14 @@ namespace Szark
         /// <summary>
         /// The singleton instance of Game
         /// </summary>
-        public static Game? Instance { get; private set; }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T Get<T>() where T : Game
+        {
+            if (_instance == null)
+                throw new ApplicationException("Game internal instance is null!");
+
+            return (T)_instance;
+        }
 
         /// <summary>
         /// Callback for any errors that occur
@@ -31,17 +41,17 @@ namespace Szark
         /// <summary>
         /// The pixel width of the Game screen
         /// </summary>
-        public uint ScreenWidth { get; private set; }
+        public int ScreenWidth { get; private set; }
 
         /// <summary>
         /// The pixel height of the Game screen
         /// </summary>
-        public uint ScreenHeight { get; private set; }
+        public int ScreenHeight { get; private set; }
 
         /// <summary>
         /// The size of each pixel on screen
         /// </summary>
-        public uint PixelSize { get; private set; }
+        public int PixelSize { get; private set; }
 
         /// <summary>
         /// The title of the Game window
@@ -69,6 +79,10 @@ namespace Szark
         public Keyboard Keyboard { get; private set; }
         public Cursor Cursor { get; private set; }
 
+        public EntityManager EntityManager { get; private set; }
+
+        private static Game? _instance;
+
         private Canvas? canvas;
         private Texture? drawTarget;
         private Vec2 renderOffset;
@@ -89,6 +103,10 @@ namespace Szark
 
         public Game(string title, uint width, uint height, uint pixelSize, bool fullscreen)
         {
+            if (_instance == null) _instance = this;
+            else if (_instance != this)
+                throw new Exception("Cannot have two Game instances!");
+
             Cursor = new Cursor();
             Keyboard = new Keyboard();
             Mouse = new Mouse();
@@ -96,10 +114,10 @@ namespace Szark
             Title = title;
             WindowWidth = width;
             WindowHeight = height;
-            PixelSize = pixelSize;
+            PixelSize = (int)pixelSize;
 
-            ScreenWidth = width / pixelSize;
-            ScreenHeight = height / pixelSize;
+            ScreenWidth = (int)width / (int)pixelSize;
+            ScreenHeight = (int)height / (int)pixelSize;
             IsFullscreen = fullscreen;
 
             // Callbacks are required to be members
@@ -110,9 +128,7 @@ namespace Szark
             keyCallback = new KeyCallback(Keyboard.OnKeyboardEvent);
             errorCallback = new ErrorCallback(Error);
 
-            if (Instance == null) Instance = this;
-            else if (Instance != this)
-                throw new Exception("Cannot have two Game instances!");
+            EntityManager = new EntityManager(Assembly.GetCallingAssembly());
 
             SetupCallbacks();
         }
@@ -156,7 +172,7 @@ namespace Szark
         /// </summary>
         /// <param name="gfx">Canvas for drawing</param>
         /// <param name="deltaTime">Delta time</param>
-        protected virtual void OnRender(Canvas gfx, float deltaTime) { }
+        protected virtual void OnRender(Canvas canvas, float deltaTime) { }
 
         /// <summary>
         /// Called when the window is closed
@@ -195,7 +211,13 @@ namespace Szark
             Core.SetViewport(x, y, w, h);
 
             float deltaTime = (float)Core.GetDeltaTime();
-            if (canvas != null) OnRender(canvas, deltaTime);
+
+            if (canvas != null)
+            {
+                OnRender(canvas, deltaTime);
+                EntityManager.ExecuteSystems(canvas, deltaTime);
+            }
+
             drawTarget?.Update(drawTargetID);
 
             if (customShader != null)
@@ -212,7 +234,7 @@ namespace Szark
 
         void InitDrawTarget()
         {
-            drawTarget = new Texture(ScreenWidth, ScreenHeight);
+            drawTarget = new Texture((uint)ScreenWidth, (uint)ScreenHeight);
             drawTargetID = drawTarget.GenerateID();
             canvas = drawTarget.GetCanvas();
 

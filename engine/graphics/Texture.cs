@@ -82,11 +82,11 @@ namespace Szark.Graphics
             }
             catch (FileNotFoundException)
             {
-                Game.Instance?.Error("Could not find bitmap file!");
+                Game.Get<Game>()?.Error("Could not find bitmap file!");
             }
             catch (Exception)
             {
-                Game.Instance?.Error("Invalid bitmap file!");
+                Game.Get<Game>()?.Error("Invalid bitmap file!");
             }
             finally
             {

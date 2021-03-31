@@ -7,6 +7,6 @@ namespace Tests
     {
         [TestMethod]
         public void MainTest() =>
-            new Example.CoinGame().Run();
+            new Example.Pong().Run();
     }
 }

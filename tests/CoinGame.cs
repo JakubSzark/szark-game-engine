@@ -33,10 +33,10 @@ namespace Example
         }
 
         // This method is called once per frame
-        protected override void OnRender(Canvas gfx, float deltaTime)
+        protected override void OnRender(Canvas canvas, float deltaTime)
         {
             // Clear the screen
-            gfx.Fill(Color.Black);
+            canvas.Fill(Color.Black);
 
             // Draw all the coins
             for (int i = 0; i < coins.Count; i++)
@@ -49,7 +49,7 @@ namespace Example
                     continue;
                 }
 
-                gfx.Draw(coins[i], Color.Yellow);
+                canvas.Draw(coins[i], Color.Yellow);
             }
 
             // Move the Player
@@ -59,14 +59,14 @@ namespace Example
             if (Keyboard[Key.A, Input.Hold]) player.X -= speed;
             if (Keyboard[Key.D, Input.Hold]) player.X += speed;
 
-            gfx.Draw(player, Color.Green); // Draw the player
+            canvas.Draw(player, Color.Green); // Draw the player
 
             // Draw total coins collected
-            gfx.DrawString(4, 4, $"{coinsCollected}", Color.White, -1);
+            canvas.DrawString(4, 4, $"{coinsCollected}", Color.White, -1);
 
             // Win Text!
             if (coins.Count == 0)
-                gfx.DrawString(20, 20, "You win!", Color.White);
+                canvas.DrawString(20, 20, "You win!", Color.White);
         }
     }
 }
