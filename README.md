@@ -16,7 +16,7 @@
 ## Documentation
 Currently there is no wiki, but looking at the examples and the source code can help you get started!
 
-## Example Game
+## Basic Usage
 <img src="https://i.imgur.com/v06ZBLK.png" width="200"></img>
 ### This example is game about collecting coins until there are none left.
 ```c#
@@ -93,13 +93,9 @@ namespace Example
 }
 ```
 
-## Other Examples
-### Raycaster
-<img src="https://i.imgur.com/SPTGHfe.gif" width="400"></img>
-### Raytracing (CPU)
-<img src="https://i.imgur.com/g03ZFz5.png" width="400"></img>
-### Raytracing (GPU)
-<img src="https://i.imgur.com/8JcMVde.png" width="400"></img>
+## Examples
+<img src="https://i.imgur.com/SPTGHfe.gif" width="400"></img><img src="https://i.imgur.com/xqOdddD.png" width="400"></img>
+<img src="https://i.imgur.com/8JcMVde.png" width="400"></img><img src="https://i.imgur.com/g03ZFz5.png" width="400"></img>
 
 ## Acknowledgments
 [olcPixelGameEngine](https://github.com/OneLoneCoder/olcPixelGameEngine) by [Javidx9]
