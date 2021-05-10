@@ -1,5 +1,4 @@
 # Szark Game Engine
-## What is it?
 **Szark Game Engine** is a GUI-less game engine created with **C++** and **C#** which allows for a way to easily make visuals or games.
 
 ## How to Install
